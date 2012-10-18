@@ -1,23 +1,22 @@
 #!/usr/bin/env python
 from time import time
 
-month = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
-def run():
-	day=2
-	count=0
-	for i in range(1901,2001):
-		for j in range(1,13):
-			if i%4==0 and i%100!=0 or i%400==0:
-				day = day+29
+Months = [31,28,31,30,31,30,31,31,30,31,30,31]
+def run(limit):
+	total = 0
+	day = 0
+	for year in range(1900,limit):
+		for x in Months:
+			if (year % 4 == 0) and x == 2:
+				day = (day+29)% 7
 			else:
-				day = day+month[j]
-			if day%7==0:
-					count=count+1
-	return count
+				day = (day+x)% 7
+			if day == 0:
+				total+=1
+	return total
 
 if __name__ =="__main__":
 	start = time()
 
-
-	print "Answer to Problem 19:", run()
+	print "Answer to Problem 19:", run(2000)
 	print "Completed in: %f seconds" % (time() - start)
